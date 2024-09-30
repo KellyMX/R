@@ -1,0 +1,12 @@
+# One of the questions for this report will be determining if patients average systolic blood pressure differs by marriage category.
+
+# The full dataset is called patientsW2017.csv, and has the following columns.
+# Column 1: The age of the patient.
+# Column 2: totalchol: A measure of the patients total cholesterol - the higher the number, the more cholesterol. In units of mg/dL.
+# Column 3: sysBP: The patients systolic blood pressure. In units of mm Hg.
+# Column 4: weight: The patients weight in units of kg.
+# Column 5: height: The patients height in units of cm.
+# Column 6: sedmins: The patients number of sedentary minutes per week.
+# Column 7: obese: The patients obesity category, with values normal, overweight, obese.
+# Column 8: marriage: The patients marriage category, with values other, married, divorced, widowed, nevermarried.
+# Column 9: gender: M or F, denoting Male or Female.
