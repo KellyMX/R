@@ -1,15 +1,16 @@
 This project investigates the relationship between marriage status and systolic blood pressure (sysBP) using statistical analysis methods, primarily ANOVA (Analysis of Variance). The objective is to determine whether there is a significant difference in average systolic blood pressure among various marriage categories (Married, Divorced, Never Married, Widowed, and Other). We use a 99% Bonferroni-adjusted confidence interval to evaluate pairwise differences. The study is particularly relevant for understanding potential health impacts related to marriage.
 
-# The full dataset is called patientsW2017.csv, and has the following columns.
-# Column 1: The age of the patient.
-# Column 2: totalchol: A measure of the patients total cholesterol - the higher the number, the more cholesterol. In units of mg/dL.
-# Column 3: sysBP: The patients systolic blood pressure. In units of mm Hg.
-# Column 4: weight: The patients weight in units of kg.
-# Column 5: height: The patients height in units of cm.
-# Column 6: sedmins: The patients number of sedentary minutes per week.
-# Column 7: obese: The patients obesity category, with values normal, overweight, obese.
-# Column 8: marriage: The patients marriage category, with values other, married, divorced, widowed, nevermarried.
-# Column 9: gender: M or F, denoting Male or Female.
+The full dataset is called patientsW2017.csv, and has the following columns.
+Column 1: The age of the patient.
+Column 2: totalchol: A measure of the patients total cholesterol - the higher the number, the more cholesterol. In units of mg/dL.
+Column 3: sysBP: The patients systolic blood pressure. In units of mm Hg.
+Column 4: weight: The patients weight in units of kg.
+Column 5: height: The patients height in units of cm.
+Column 6: sedmins: The patients number of sedentary minutes per week.
+Column 7: obese: The patients obesity category, with values normal, overweight, obese.
+Column 8: marriage: The patients marriage category, with values other, married, divorced, widowed, nevermarried.
+Column 9: gender: M or F, denoting Male or Female.
+
 
 
 # View the data in patientsW2017
@@ -95,6 +96,7 @@ aggregate(sysBP ~ gender, data = patientsW2017, sd)
 # Create a box plot for systolic blood pressure by gender
 boxplot(sysBP ~ gender, data = patientsW2017)
 # Visualizes the distribution of systolic blood pressure for each gender
+
 
 
 Summary of Findings
