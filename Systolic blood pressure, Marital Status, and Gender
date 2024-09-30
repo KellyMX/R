@@ -1,4 +1,4 @@
-# One of the questions for this report will be determining if patients average systolic blood pressure differs by marriage category.
+This project investigates the relationship between marriage status and systolic blood pressure (sysBP) using statistical analysis methods, primarily ANOVA (Analysis of Variance). The objective is to determine whether there is a significant difference in average systolic blood pressure among various marriage categories (Married, Divorced, Never Married, Widowed, and Other). We use a 99% Bonferroni-adjusted confidence interval to evaluate pairwise differences. The study is particularly relevant for understanding potential health impacts related to marriage.
 
 # The full dataset is called patientsW2017.csv, and has the following columns.
 # Column 1: The age of the patient.
@@ -10,3 +10,129 @@
 # Column 7: obese: The patients obesity category, with values normal, overweight, obese.
 # Column 8: marriage: The patients marriage category, with values other, married, divorced, widowed, nevermarried.
 # Column 9: gender: M or F, denoting Male or Female.
+
+
+# View the data in patientsW2017
+View(patientsW2017)
+# Display the dataset 'patientsW2017' in a readable format
+
+# Calculate the mean of systolic blood pressure (sysBP)
+mean(patientsW2017$sysBP)
+# Shows the average systolic blood pressure for all patients
+
+# Calculate the standard deviation of systolic blood pressure (sysBP)
+sd(patientsW2017$sysBP)
+# Displays the variability of systolic blood pressure values
+
+# Aggregate mean systolic blood pressure by marriage status
+aggregate(sysBP ~ marriage, data = patientsW2017, mean)
+# Provides the mean systolic blood pressure for each marital status group
+
+# Aggregate standard deviation of systolic blood pressure by marriage status
+aggregate(sysBP ~ marriage, data = patientsW2017, sd)
+# Displays the variability of systolic blood pressure for each marital status
+
+# Aggregate the number of patients (count) by marriage status
+aggregate(sysBP ~ marriage, data = patientsW2017, length)
+# Shows the count of patients for each marital status
+
+# Create a vector for marriage and systolic blood pressure values
+marriage.sysBP <- c(124.64, 125.89, 119.17, 122.75, 138.62)
+names(marriage.sysBP) <- c("Divorced", "Married", "Never Married", "Other", "Widowed")
+# Assigns specific systolic blood pressure averages to marital status categories
+
+# Create a bar plot for systolic blood pressure by marriage status
+barplot(marriage.sysBP, main = "Marriage and Systolic Blood Pressure", beside = TRUE, legend.text = names(marriage.sysBP))
+# Visualizes the relationship between marriage status and systolic blood pressure
+
+# Create a table of systolic blood pressure by marriage status and generate a mosaic plot
+sysBP.mariage = table(patientsW2017$sysBP, patientsW2017$marriage)
+mosaicplot(sysBP.mariage)
+# Displays a mosaic plot for systolic blood pressure based on marital status distribution
+
+# Generate a QQ plot to check normality of systolic blood pressure
+qqnorm(patientsW2017$sysBP, main = "Normal Probability Plot for Systolic Blood Pressure")
+qqline(patientsW2017$sysBP)
+# Evaluates the normality of systolic blood pressure distribution with a QQ plot
+
+# Install and load the 'multcomp' package
+install.packages("multcomp")
+library(multcomp)
+# Adds the 'multcomp' package for multiple comparison testing
+
+# Perform ANOVA to assess the effect of marriage status on systolic blood pressure
+anova.model = lm(sysBP ~ marriage, data = patientsW2017)
+summary(glht(anova.model, linfct = mcp(marriage = "Means")), test = adjusted("bonferroni"))
+# Conducts ANOVA and uses Bonferroni adjustment for pairwise comparison of marriage categories
+
+# Convert the marriage variable to a factor and redo the ANOVA
+patientsW2017$marriage = as.factor(patientsW2017$marriage)
+anova.model = lm(sysBP ~ marriage, data = patientsW2017)
+# Ensures marriage is treated as a categorical variable before re-running the ANOVA
+
+# Extract residuals and check their normality using a QQ plot
+eij = anova.model$residuals
+qqnorm(eij)
+qqline(eij)
+# Assesses the normality of residuals from the ANOVA model
+
+# Perform Shapiro-Wilk test on residuals to further test for normality
+shapiro.test(eij)
+# Applies a formal normality test to the residuals
+
+# Conduct a t-test to compare systolic blood pressure by gender
+t.test(sysBP ~ gender, data = patientsW2017, conf.level = 1-0.01)
+# Performs a t-test comparing systolic blood pressure across gender with a 99% confidence level
+
+# Generate another QQ plot to assess the normality of systolic blood pressure
+qqnorm(patientsW2017$sysBP)
+# Evaluates the normality of systolic blood pressure with another QQ plot
+
+# Calculate the standard deviation of systolic blood pressure by gender
+aggregate(sysBP ~ gender, data = patientsW2017, sd)
+# Shows the variability of systolic blood pressure for each gender
+
+# Create a box plot for systolic blood pressure by gender
+boxplot(sysBP ~ gender, data = patientsW2017)
+# Visualizes the distribution of systolic blood pressure for each gender
+
+
+Summary of Findings
+-Main Research Question: Does systolic blood pressure differ across marriage categories?
+-Overall Mean sysBP: 125.1 mmHg
+-Overall Standard Deviation: 18.85 mmHg
+
+Marriage Categories' Mean sysBP:
+-Widowed: 138.62 mmHg
+-Married: 125.89 mmHg
+-Divorced: 124.64 mmHg
+-Other: 122.75 mmHg
+-Never Married: 119.17 mmHg
+
+ANOVA Result:
+F-statistic: 16.09
+P-value: 8.969e-13
+Conclusion: Reject the null hypothesis; at least one marriage category has a significantly different systolic blood pressure.
+Confidence Interval Insights:
+Significant Differences: Widowed group has significantly higher systolic blood pressure compared to all other categories.
+No Significant Differences: Between Married and Other, Divorced and Other, and several others where confidence intervals included zero.
+Key Pairwise Comparisons:
+Married vs. Never Married: Married individuals have higher systolic blood pressure.
+Divorced vs. Widowed: Widowed individuals have significantly higher systolic blood pressure.
+
+Assumption Testing
+The main assumptions for ANOVA include:
+-Random sampling from each group
+-Independence between groups
+-Normality of the populations
+-Equality of population standard deviations
+-Normality was violated:
+
+-The Shapiro-Wilk Test yielded a p-value of 2.2e-16, leading us to reject the null hypothesis of normality.
+-The Normal Q-Q Plot also showed heavy deviations, indicating non-normality.
+Despite violations in normality, the analysis proceeded without adjusting for outliers.
+
+Conclusion
+-Overall Finding: Systolic blood pressure varies by marriage category, with widowed patients having significantly higher systolic blood pressure than all other groups.
+-Practical Relevance: These findings are relevant for individuals considering the health impacts of marriage, particularly regarding cardiovascular health.
+-Limitations: Normality assumption was violated, which might affect the robustness of the ANOVA results. Future studies could consider handling outliers or using more robust statistical methods.
