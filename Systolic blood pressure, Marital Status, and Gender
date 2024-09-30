@@ -1,7 +1,7 @@
 This project investigates the relationship between marriage status and systolic blood pressure (sysBP) using statistical analysis methods, primarily ANOVA (Analysis of Variance). The objective is to determine whether there is a significant difference in average systolic blood pressure among various marriage categories (Married, Divorced, Never Married, Widowed, and Other). We use a 99% Bonferroni-adjusted confidence interval to evaluate pairwise differences. The study is particularly relevant for understanding potential health impacts related to marriage.
 
 The full dataset is called patientsW2017.csv, and has the following columns.
-You can download the dataset used in this analysis [here](./patientsW2017.csv).
+
 Column 1: The age of the patient.
 Column 2: totalchol: A measure of the patients total cholesterol - the higher the number, the more cholesterol. In units of mg/dL.
 Column 3: sysBP: The patients systolic blood pressure. In units of mm Hg.
